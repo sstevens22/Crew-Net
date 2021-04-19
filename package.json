@@ -2,7 +2,7 @@
   "name": "crew-net",
   "version": "1.0.0",
   "description": "",
-  "main": "Async.js",
+  "main": "server.js",
   "dependencies": {
     "console.table": "^0.10.0",
     "express": "^4.17.1",
