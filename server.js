@@ -30,7 +30,7 @@ const startApp = () => {
                 showAll();
                 break;
             case 'View all Emplyees by Department':
-                showByDept();
+                displayDepartment();
                 break;
             case 'View all Employees by Manager':
                 showByManager();
@@ -81,7 +81,7 @@ const showAll = () => {
 
 }
 
-const showByDept = () => {
+const displayDepartment = () => {
     const departmentQuery = 'SELECT * FROM departments';
     connection.query(departmentQuery, (err, results) => {
         if (err) throw err;

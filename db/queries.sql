@@ -37,6 +37,6 @@ WHERE department_name = '';
 
 INSERT INTO employees(first_name, last_name, role_id, manager_id) 
 VALUES('New', 'Crew', (SELECT id FROM roles WHERE title = '' ), 
-(SELECT id FROM (SELECT id FROM employees WHERE CONCAT(first_name," ",last_name) = "Michael Scott" )AS tmptable));
+(SELECT id FROM (SELECT id FROM employees WHERE CONCAT(first_name," ",last_name) = "John Smith" )AS tmptable));
            
 SELECT Errors;
