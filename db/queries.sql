@@ -12,7 +12,7 @@ LEFT JOIN roles list
 ON roll.id = employee.role_id 
 LEFT JOIN departments list 
 ON department.id = roll.department_id
-LEFT JOIN employee manager list ON manager.id = employee.manager_id
+LEFT JOIN employees list ON manager.id = employee.manager_id
 ORDER BY employee.id;
 
 
