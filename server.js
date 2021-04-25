@@ -4,16 +4,16 @@ const cTable = require('console.table');
 const connection = require('./assets/Async')
 const startScreen = ['View all Employees', 'View all Emplyees by Department', 'View all Employees by Manager', 'Add Employee', 'Remove Employee', 'Update Employee Role', 'View all Roles', 'Add Role', 'Remove Role', 'View all Departments', 'Add Department', 'Remove Department', 'Exit']
 const addEmployeeDetails = ['What is the first name?', 'What is the last name?', 'What is their role?', 'Who is their manager?']
-const roleQuery = 'SELECT * from roles; SELECT CONCAT (employee.first_name," ",employee.last_name) AS full_name FROM employees list;'
-const managerQuery = 'SELECT CONCAT (employee.first_name," ",employee.last_name) AS full_name, roll.title, department.department_name FROM employees list INNER JOIN roles list ON roll.id = employee.role_id INNER JOIN departments list ON department.id = roll.department_id WHERE department_name = "Management";'
-const allEmployeeQuery = `SELECT employee.id, employee.first_name AS "First Name", employee.last_name AS "Last Name", roll.title, ddepartment.department_name AS "Department", IFNULL(roll.salary, 'No Data') AS "Salary", CONCAT(manager.first_name," ",manager.last_name) AS "Manager"
-FROM employees list
-LEFT JOIN roles list 
-ON roll.id = employee.role_id 
-LEFT JOIN departments list 
-ON department.id = roll.department_id
-LEFT JOIN employees list ON manager.id = employee.manager_id
-ORDER BY employee.id;`
+const roleQuery = 'SELECT * from roles; SELECT CONCAT (e.first_name," ",e.last_name) AS full_name FROM employees e;'
+const managerQuery = 'SELECT CONCAT (e.first_name," ", e.last_name) AS full_name, r.title, d.department_name FROM employees e INNER JOIN roles r ON r.id = e.role_id INNER JOIN departments d ON d.id = r.department_id WHERE department_name = "Management";'
+const allEmployeeQuery = `SELECT e.id, e.first_name AS "First Name", e.last_name AS "Last Name", r.title, d.department_name AS "Department", IFNULL(r.salary, 'No Data') AS "Salary", CONCAT(m.first_name," ", m.last_name) AS "Manager"
+FROM employees e
+LEFT JOIN roles r
+ON r.id = e.role_id 
+LEFT JOIN departments d 
+ON d.id = r.department_id
+LEFT JOIN employees e ON m.id = e.manager_id
+ORDER BY e.id;`
 
 
 
@@ -104,7 +104,7 @@ const displayDepartment = () => {
                 }
             }
 
-            const query = 'SELECT employeemployee.id, employee.first_name AS "First Name", employee.last_name AS "Last Name", roll.title AS "Title", department.department_name AS "Department", roll.salary AS "Salary" FROM employees list INNER JOIN roles list ON roll.id = employee.role_id INNER JOIN departments list ON department.id = roll.department_id WHERE ?;';
+            const query = 'SELECT e.id, e.first_name AS "First Name", e.last_name AS "Last Name", r.title AS "Title", d.department_name AS "Department", r.salary AS "Salary" FROM employees e INNER JOIN roles rON r.id = e.role_id INNER JOIN departments d ON d.id = r.department_id WHERE ?;';
             connection.query(query, { department_name: departmentChosen.department_name }, (err, res) => {
                 if (err) throw err;
                 console.log(' ');
@@ -130,15 +130,15 @@ const showByManager = () => {
                 message: 'Select a Manager:'
             }
         ]).then((answer) => {
-            const managerQuery2 = `SELECT employeemployee.id, employee.first_name AS "First Name", employee.last_name AS "Last Name", IFNULL(roll.title, "No Data") AS "Title", IFNULL(department.department_name, "No Data") AS "Department", IFNULL(roll.salary, 'No Data') AS "Salary", CONCAT(manager.first_name," ",manager.last_name) AS "Manager"
-                FROM employees list
-                LEFT JOIN roles list 
-                ON roll.id = employee.role_id 
-                LEFT JOIN departments list 
-                ON department.id = roll.department_id
-                LEFT JOIN employee manager list ON manager.id = employee.manager_id
-                WHERE CONCAT(manager.first_name," ",manager.last_name) = ?
-                ORDER BY employeemployee.id;`
+            const managerQuery2 = `SELECT e.id, e.first_name AS "First Name", e.last_name AS "Last Name", IFNULL(r.title, "No Data") AS "Title", IFNULL(d.department_name, "No Data") AS "Department", IFNULL(r.salary, 'No Data') AS "Salary", CONCAT(m.first_name," ",m.last_name) AS "Manager"
+                FROM employees e
+                LEFT JOIN roles r
+                ON r.id = e.role_id 
+                LEFT JOIN departments d 
+                ON d.id = r.department_id
+                LEFT JOIN employees m ON m.id = e.manager_id
+                WHERE CONCAT(m.first_name," ",m.last_name) = ?
+                ORDER BY e.id;`
             connection.query(managerQuery2, [answer.manager_choice], (err, results) => {
                 if (err) throw err;
                 console.log(' ');
@@ -210,7 +210,7 @@ const removeEmployee = () => {
                 message: 'Enter the Employee ID of the person to remove:'
             }
         ]).then((answer) => {
-            connection.query(`DELETE FROM employees where ?`, { id: answeroll.idtoRemove });
+            connection.query(`DELETE FROM employees where ?`, { id: answer.idtoRemove });
             startApp();
         })
     })

@@ -1,14 +1,14 @@
 {
   "name": "crew-net",
   "version": "1.0.0",
-  "description": "",
+  "description": "![Badge for GitHub repo top language](https://img.shields.io/github/languages/top/sstevens22/Crew-Net?style=flat&logo=appveyor) \r ![Badge for GitHub last commit](https://img.shields.io/github/last-commit/sstevens22/Crew-Net?style=flat&logo=appveyor)\r ![Badge for GitHub license](https://img.shields.io/github/license/sstevens22/Crew-Net?style=flat&logo=appveyor)",
   "main": "server.js",
   "dependencies": {
     "console.table": "^0.10.0",
     "express": "^4.17.1",
     "inquirer": "^8.0.0",
     "mysql2": "^2.2.5",
-    "require": "^2.4.20"
+    "mysql": "^2.18.1"
   },
   "devDependencies": {},
   "scripts": {
