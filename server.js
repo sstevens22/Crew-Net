@@ -100,7 +100,7 @@ const searchEmp = () => {
 const searchRole = () => {
   connection.query(queryRolesInfo, (err, res) => {
     if (err) throw err;
-    console.log(`\n\n\n
+    console.log(`\n
         *** Viewing all ${res.length} Roles *** \n`);
     console.table(res);
   });
@@ -137,7 +137,7 @@ const addEmp = () => {
           {
             type: "input",
             name: "newEmpFirst",
-            message: "\n New employee`s first name?",
+            message: "New employee`s first name?",
           },
           {
             type: "input",
